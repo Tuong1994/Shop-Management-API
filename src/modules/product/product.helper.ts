@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { Prisma, Product } from '@prisma/client';
 import { QueryDto } from 'src/common/dto/query.dto';
 import { ELang, ERecordStatus } from 'src/common/enum/base';
-import utils from 'src/utils';
 import { ProductDto } from './product.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { ProductWithImage } from './product.type';
+import utils from 'src/utils';
 
 @Injectable()
 export class ProductHelper {
