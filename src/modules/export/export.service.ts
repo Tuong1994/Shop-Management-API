@@ -47,6 +47,26 @@ export class ExportService {
     this.exportHelper.responseFile(res, buffer, 'users');
   }
 
+  async categoryExport(query: QueryDto, res: Response) {
+    const { locale } = query;
+    const lang = utils.getLang(locale);
+    const categories = await this.prisma.category.findMany({
+      where: { isDelete: this.isNotDelete },
+    });
+    const exportData = categories.map((category) => ({
+      ...category,
+      name: locale === ELang.EN ? category.nameEn : category.nameVn,
+      status: this.exportHelper.getRecordStatus(category.status, locale),
+    }));
+    const columns: WorkSheetColumns = [
+      { header: lang.excel.header.name, key: 'name' },
+      { header: lang.excel.header.status, key: 'status' },
+    ];
+    const { workBook } = this.excelService.generateExcel(exportData, columns, 'Categories');
+    const buffer = await workBook.xlsx.writeBuffer();
+    this.exportHelper.responseFile(res, buffer, 'categories');
+  }
+
   async productExport(query: QueryDto, res: Response) {
     const { locale } = query;
     const lang = utils.getLang(locale);
