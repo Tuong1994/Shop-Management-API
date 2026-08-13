@@ -8,7 +8,7 @@ datasource db {
 
 model User {
   id                String          @id @default(uuid())
-  email             String          @unique
+  email             String
   password          String
   phone             String
   role              Int
@@ -18,7 +18,7 @@ model User {
   gender            Int?
   birthday          String?
   isDelete          Boolean?
-  googleId          String?         @unique()
+  googleId          String?
   resetToken        String?
   resetTokenExpires BigInt?
   createdAt         DateTime        @default(now())
@@ -27,7 +27,12 @@ model User {
   image             Image?
   address           UserAddress?
   permission        UserPermission?
+  cart              Cart?
+  growths           UserGrowth[]
+  bills             Bill[]
+  userLoans         UserLoan[]
 
+  @@unique([gender, role, email, googleId])
   @@index([isDelete, email])
   @@map("user")
 }
@@ -148,32 +153,142 @@ model Category {
   image     Image?
   products  Product[]
 
+  @@unique([status])
   @@index([isDelete])
   @@map("category")
 }
 
 model Product {
-  id            String   @id @default(uuid())
+  id            String     @id @default(uuid())
   nameEn        String
   nameVn        String
-  unit          Int
-  display       Int
+  description   String?    @db.VarChar(3000)
+  unit          Int?
+  display       Int?
   cost          Int
   price         Int
   status        Int
-  items         Int
-  boxes         Int
-  amount        Int
-  storageStatus Int
-  supplier      String
+  items         Int?
+  boxes         Int?
+  amount        Int?
+  storageStatus Int?
+  type          Int
+  supplier      String?
   isNew         Boolean
   isDelete      Boolean?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  categoryId    String
-  category      Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  categoryId    String?
+  category      Category?  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   image         Image?
+  cartItems     CartItem[]
 
+  @@unique([unit, display, status, storageStatus, type, categoryId])
   @@index([categoryId, isDelete], map: "Product_categoryId_fkey")
   @@map("product")
+}
+
+model Cart {
+  id        String     @id @default(uuid())
+  isDelete  Boolean?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  userId    String
+  user      User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+
+  @@unique([userId])
+  @@index([isDelete])
+  @@map("cart")
+}
+
+model CartItem {
+  id        String   @id @default(uuid())
+  quantity  Int
+  isDelete  Boolean?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cartId    String
+  productId String
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([cartId, productId])
+  @@index([cartId], map: "CartItem_cartId_fkey")
+  @@index([productId], map: "CartItem_productId_fkey")
+  @@map("cart_item")
+}
+
+model Growth {
+  id        String       @id @default(uuid())
+  name      String
+  cost      Int
+  order     Int
+  isDelete  Boolean?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  purchases UserGrowth[]
+
+  @@unique([order])
+  @@index([isDelete])
+  @@map("growth")
+}
+
+model UserGrowth {
+  id        String   @id @default(uuid())
+  userId    String
+  growthId  String
+  isDelete  Boolean?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  growth    Growth   @relation(fields: [growthId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, growthId])
+  @@index([userId])
+  @@map("user_growth")
+}
+
+model Bill {
+  id        String   @id @default(uuid())
+  type      Int
+  cost      Int
+  isDelete  Boolean?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([type, userId])
+  @@map("bill")
+}
+
+model Loan {
+  id         String     @id @default(uuid())
+  type       Int
+  cost       Int
+  interest   Int
+  payment    Int
+  termLength Int
+  isDelete   Boolean?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  userLoans  UserLoan[]
+
+  @@unique([type])
+  @@map("loan")
+}
+
+model UserLoan {
+  id        String   @id @default(uuid())
+  userId    String
+  loanId    String
+  isDelete  Boolean?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  loan      Loan     @relation(fields: [loanId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, loanId])
+  @@map("user_loan")
 }
