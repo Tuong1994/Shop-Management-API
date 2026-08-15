@@ -1,3 +1,12 @@
+export enum EProductType {
+  PRODUCT = 1,
+  FURNITURE = 2,
+  PAINT = 3,
+  FLOOR = 4,
+  TOOL = 5,
+  VEHICLE = 6
+}
+
 export enum EProductUnit {
   KG = 1,
   BOX = 2,

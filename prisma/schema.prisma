@@ -49,9 +49,10 @@ model UserAddress {
   isDelete      Boolean?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  userId        String   @unique
+  userId        String
   user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([userId])
   @@index([isDelete])
   @@map("user_address")
 }
@@ -64,9 +65,10 @@ model UserPermission {
   isDelete  Boolean?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  userId    String   @unique
+  userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([userId])
   @@index([isDelete])
   @@map("user_permission")
 }
@@ -76,9 +78,10 @@ model Auth {
   token     String   @db.VarChar(3000)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  userId    String   @unique
+  userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([userId])
   @@map("auth")
 }
 
@@ -162,7 +165,8 @@ model Product {
   id            String     @id @default(uuid())
   nameEn        String
   nameVn        String
-  description   String?    @db.VarChar(3000)
+  descriptionEn String?    @db.VarChar(3000)
+  descriptionVn String?    @db.VarChar(3000)
   unit          Int?
   display       Int?
   cost          Int
