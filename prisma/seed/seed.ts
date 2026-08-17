@@ -7,9 +7,13 @@ import districts from './district.seed';
 import wards from './ward.seed';
 import categories from './category.seed';
 import products from './product.seed';
+import growths from './growth.seed';
+import bills from './bill.seed';
+import loans from './loan.seed';
+import userLoans from './user-loan.seed';
 
 const main = async () => {
-  console.log("Deleting old data...")
+  console.log('Deleting old data...');
 
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
@@ -19,8 +23,12 @@ const main = async () => {
   await prisma.userPermission.deleteMany();
   await prisma.userAddress.deleteMany();
   await prisma.user.deleteMany();
+  await prisma.growth.deleteMany();
+  await prisma.bill.deleteMany();
+  await prisma.loan.deleteMany();
+  await prisma.userLoan.deleteMany();
 
-  console.log("Creating new data...")
+  console.log('Creating new data...');
 
   await prisma.user.createMany({ data: users });
   await prisma.userAddress.createMany({ data: userAddresses });
@@ -30,6 +38,10 @@ const main = async () => {
   await prisma.ward.createMany({ data: wards });
   await prisma.category.createMany({ data: categories });
   await prisma.product.createMany({ data: products });
+  await prisma.growth.createMany({ data: growths });
+  await prisma.bill.createMany({ data: bills });
+  await prisma.loan.createMany({ data: loans });
+  await prisma.userLoan.createMany({ data: userLoans });
 };
 
 main()

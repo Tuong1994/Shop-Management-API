@@ -32,7 +32,7 @@ model User {
   bills             Bill[]
   userLoans         UserLoan[]
 
-  @@unique([gender, role, email, googleId])
+  @@unique([email, googleId])
   @@index([isDelete, email])
   @@map("user")
 }
@@ -53,6 +53,7 @@ model UserAddress {
   user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId])
+  @@index([userId], map: "UserAdress_userId_fkey")
   @@index([isDelete])
   @@map("user_address")
 }
@@ -69,6 +70,7 @@ model UserPermission {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId])
+  @@index([userId], map: "UserPermission_userId_fkey")
   @@index([isDelete])
   @@map("user_permission")
 }
@@ -82,6 +84,7 @@ model Auth {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId])
+  @@index([userId], map: "Auth_userId_fkey")
   @@map("auth")
 }
 
@@ -142,6 +145,9 @@ model Image {
   product    Product?  @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@index([isDelete])
+  @@index([userId], map: "Image_userId_fkey")
+  @@index([categoryId], map: "Image_categoryId_fkey")
+  @@index([productId], map: "Image_productId_fkey")
   @@map("image")
 }
 
@@ -156,7 +162,6 @@ model Category {
   image     Image?
   products  Product[]
 
-  @@unique([status])
   @@index([isDelete])
   @@map("category")
 }
@@ -169,7 +174,7 @@ model Product {
   descriptionVn String?    @db.VarChar(3000)
   unit          Int?
   display       Int?
-  cost          Int
+  cost          Int?
   price         Int
   status        Int
   items         Int?
@@ -178,7 +183,7 @@ model Product {
   storageStatus Int?
   type          Int
   supplier      String?
-  isNew         Boolean
+  isNew         Boolean?
   isDelete      Boolean?
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -187,7 +192,6 @@ model Product {
   image         Image?
   cartItems     CartItem[]
 
-  @@unique([unit, display, status, storageStatus, type, categoryId])
   @@index([categoryId, isDelete], map: "Product_categoryId_fkey")
   @@map("product")
 }
@@ -202,6 +206,7 @@ model Cart {
   items     CartItem[]
 
   @@unique([userId])
+  @@index([userId], map: "Cart_userId_fkey")
   @@index([isDelete])
   @@map("cart")
 }
@@ -217,7 +222,6 @@ model CartItem {
   cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  @@unique([cartId, productId])
   @@index([cartId], map: "CartItem_cartId_fkey")
   @@index([productId], map: "CartItem_productId_fkey")
   @@map("cart_item")
@@ -248,8 +252,8 @@ model UserGrowth {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   growth    Growth   @relation(fields: [growthId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, growthId])
-  @@index([userId])
+  @@index([userId], map: "UserGrowth_userId_fkey")
+  @@index([growthId], map: "UserGrowth_growthId_fkey")
   @@map("user_growth")
 }
 
@@ -263,21 +267,22 @@ model Bill {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([type, userId])
+  @@index([userId], map: "Bill_userId_fkey")
   @@map("bill")
 }
 
 model Loan {
-  id         String     @id @default(uuid())
-  type       Int
-  cost       Int
-  interest   Int
-  payment    Int
-  termLength Int
-  isDelete   Boolean?
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  userLoans  UserLoan[]
+  id          String     @id @default(uuid())
+  type        Int
+  cost        Int
+  interest    Int
+  payment     Int
+  termLength  Int
+  totalReturn Int
+  isDelete    Boolean?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  userLoans   UserLoan[]
 
   @@unique([type])
   @@map("loan")
@@ -285,14 +290,18 @@ model Loan {
 
 model UserLoan {
   id        String   @id @default(uuid())
-  userId    String
-  loanId    String
+  payment   Int
+  lateFee   Int
+  dueDate   DateTime
   isDelete  Boolean?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  userId    String
+  loanId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   loan      Loan     @relation(fields: [loanId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, loanId])
+  @@index([userId], map: "UserLoan_userId_fkey")
+  @@index([loanId], map: "UserLoan_loanId_fkey")
   @@map("user_loan")
 }

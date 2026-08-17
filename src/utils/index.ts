@@ -132,6 +132,11 @@ const utils = {
   filterByKeywords: (value: string, keywords: string) => {
     return value.toLowerCase().includes(keywords.toLowerCase());
   },
+
+  setDatePlus: (days: number, date?: string) => {
+    const startDate = date ? new Date(date) : new Date();
+    return new Date(startDate.setDate(startDate.getDate() + days))
+  }
 };
 
 export default utils;
