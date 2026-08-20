@@ -18,6 +18,9 @@ export class ProductHelper {
       id: true,
       nameEn: locale === ELang.EN,
       nameVn: locale === ELang.VN,
+      descriptionEn: locale === ELang.EN,
+      descriptionVn: locale === ELang.VN,
+      type: true,
       unit: true,
       display: true,
       cost: true,
@@ -65,6 +68,8 @@ export class ProductHelper {
     const {
       nameEn,
       nameVn,
+      descriptionEn,
+      descriptionVn,
       cost,
       price,
       unit,
@@ -75,11 +80,14 @@ export class ProductHelper {
       status,
       storageStatus,
       amount,
+      type,
       categoryId,
     } = product;
     return {
       nameEn,
       nameVn,
+      descriptionEn,
+      descriptionVn,
       cost: Number(cost),
       price: Number(price),
       unit: Number(unit),
@@ -89,6 +97,7 @@ export class ProductHelper {
       status: Number(status),
       storageStatus: Number(storageStatus),
       amount: Number(amount),
+      type: Number(type),
       supplier,
       categoryId,
     };

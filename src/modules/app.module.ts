@@ -18,6 +18,8 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { MethodBasedThrottlerGuard } from 'src/common/guard/throllter.guard';
 import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
+import { CartModule } from './cart/cart.module';
+import { BillModule } from './bill/bill.module';
 
 @Module({
   imports: [
@@ -35,9 +37,11 @@ import { ProductModule } from './product/product.module';
     ExcelModule,
     EmailModule,
     UserModule,
+    AuthModule,
     CategoryModule,
     ProductModule,
-    AuthModule,
+    CartModule,
+    BillModule,
     CityModule,
     DistrictModule,
     WardModule,

@@ -13,6 +13,7 @@ export class QueryDto {
   productId?: string;
   cartId?: string;
   cartItemId?: string;
+  billId?: string;
   imageId?: string;
   cityId?: string;
   districtId?: string;

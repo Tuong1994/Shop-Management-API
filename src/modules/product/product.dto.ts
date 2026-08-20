@@ -1,5 +1,5 @@
-import { IsNotEmpty } from 'class-validator';
-import { EProductDisplay, EStorageStatus } from './product.enum';
+import { IsNotEmpty, IsOptional } from 'class-validator';
+import { EProductDisplay, EProductType, EStorageStatus } from './product.enum';
 import { ERecordStatus } from 'src/common/enum/base';
 
 export class ProductDto {
@@ -9,13 +9,19 @@ export class ProductDto {
   @IsNotEmpty()
   nameVn: string;
 
-  @IsNotEmpty()
+  @IsOptional()
+  descriptionEn: string;
+
+  @IsOptional()
+  descriptionVn: string;
+
+  @IsOptional()
   unit: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   display: EProductDisplay;
 
-  @IsNotEmpty()
+  @IsOptional()
   cost: number;
 
   @IsNotEmpty()
@@ -24,21 +30,24 @@ export class ProductDto {
   @IsNotEmpty()
   status: ERecordStatus;
 
-  @IsNotEmpty()
+  @IsOptional()
   items: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   boxes: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   amount: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   storageStatus: EStorageStatus;
 
   @IsNotEmpty()
+  type: EProductType;
+
+  @IsOptional()
   supplier: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   categoryId: string;
 }
