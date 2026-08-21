@@ -40,7 +40,7 @@ export class BillService {
     return bill;
   }
 
-  async createBil(bill: BillDto) {
+  async createBill(bill: BillDto) {
     const { type, cost, userId } = bill;
     const newBill = await this.prisma.bill.create({ data: { type, cost, userId, isDelete: false } });
     return newBill;
@@ -71,7 +71,7 @@ export class BillService {
     throw new HttpException(REMOVE_SUCCESS, HttpStatus.OK);
   }
 
-  async restoreBils() {
+  async restoreBills() {
     const bills = await this.prisma.bill.findMany({ where: { isDelete: { equals: true } } });
     if (bills && !bills.length) throw new HttpException(NO_DATA_RESTORE, HttpStatus.OK);
     await Promise.all(
