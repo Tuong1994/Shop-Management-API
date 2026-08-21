@@ -20,6 +20,7 @@ import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
 import { CartModule } from './cart/cart.module';
 import { BillModule } from './bill/bill.module';
+import { GrowthModule } from './growth/growth.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { BillModule } from './bill/bill.module';
     CategoryModule,
     ProductModule,
     CartModule,
+    GrowthModule,
     BillModule,
     CityModule,
     DistrictModule,
