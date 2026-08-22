@@ -5,7 +5,7 @@ import { GrowthDto, UserGrowthDto } from './growth.dto';
 import { GrowthHelper } from './growth.helper';
 import responseMessage from 'src/common/message';
 
-const { NOT_FOUND, UPDATE_SUCCESS, REMOVE_SUCCESS, NO_DATA_RESTORE, RESTORE_SUCCESS } = responseMessage;
+const { NOT_FOUND, CREATE_SUCCESS, UPDATE_SUCCESS, REMOVE_SUCCESS, NO_DATA_RESTORE, RESTORE_SUCCESS } = responseMessage;
 
 @Injectable()
 export class GrowthService {
@@ -20,13 +20,17 @@ export class GrowthService {
     const {} = query;
     const growths = await this.prisma.growth.findMany({
       where: { isDelete: this.isNotDelete },
+      include: { purchases: true },
     });
     return { totalItems: growths.length, items: growths };
   }
 
   async getGrowth(query: QueryDto) {
     const { growthId } = query;
-    const growth = await this.prisma.growth.findUnique({ where: { id: growthId, isDelete: this.isNotDelete } });
+    const growth = await this.prisma.growth.findUnique({
+      where: { id: growthId, isDelete: this.isNotDelete },
+      include: { purchases: true },
+    });
     if (!growth) throw new HttpException(NOT_FOUND, HttpStatus.NOT_FOUND);
     return growth;
   }
@@ -39,8 +43,17 @@ export class GrowthService {
     return newGrowth;
   }
 
-  async createUserGrowth(userGrowth: UserGrowthDto) {
+  async purchaseGrowth(userGrowth: UserGrowthDto) {
     const { userId, growthId } = userGrowth;
+    const growth = await this.prisma.growth.findUnique({
+      where: { id: growthId, isDelete: this.isNotDelete },
+      select: { purchases: true },
+    });
+    if (!growth) throw new HttpException(NOT_FOUND, HttpStatus.NOT_FOUND);
+    const isPurchased = growth.purchases.find((purchase) => purchase.userId === userId);
+    if (isPurchased) throw new HttpException("You're already purchased this section", HttpStatus.BAD_REQUEST);
+    await this.prisma.userGrowth.create({ data: { userId, growthId, isDelete: false } });
+    throw new HttpException(CREATE_SUCCESS, HttpStatus.CREATED);
   }
 
   async updateGrowth(query: QueryDto, growth: GrowthDto) {
@@ -55,9 +68,12 @@ export class GrowthService {
   async removeGrowths(query: QueryDto) {
     const { ids } = query;
     const listIds = ids.split(',');
-    const growths = await this.prisma.growth.findMany({ where: { id: { in: listIds }, isDelete: this.isNotDelete } });
+    const growths = await this.prisma.growth.findMany({
+      where: { id: { in: listIds }, isDelete: this.isNotDelete },
+      include: { purchases: true },
+    });
     if (growths && !growths.length) throw new HttpException(NOT_FOUND, HttpStatus.NOT_FOUND);
-    await this.prisma.growth.updateMany({ where: { id: { in: listIds } }, data: { isDelete: true } });
+    await this.growthHelper.handleUpdateIsDelete(growths, true);
     throw new HttpException(REMOVE_SUCCESS, HttpStatus.OK);
   }
 
@@ -71,13 +87,12 @@ export class GrowthService {
   }
 
   async restoreGrowths() {
-    const growths = await this.prisma.growth.findMany({ where: { isDelete: { equals: true } } });
+    const growths = await this.prisma.growth.findMany({
+      where: { isDelete: { equals: true } },
+      include: { purchases: true },
+    });
     if (growths && !growths.length) throw new HttpException(NO_DATA_RESTORE, HttpStatus.OK);
-    await Promise.all(
-      growths.map(async (growth) => {
-        await this.prisma.growth.update({ where: { id: growth.id }, data: { isDelete: false } });
-      }),
-    );
+    await this.growthHelper.handleUpdateIsDelete(growths, false);
     throw new HttpException(RESTORE_SUCCESS, HttpStatus.OK);
   }
 }

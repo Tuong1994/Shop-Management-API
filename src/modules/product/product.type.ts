@@ -1,5 +1,5 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from '@prisma/client';
 
 export type ProductWithImage = Prisma.ProductGetPayload<{
-    select: {id: true, image: true}
-}>
+  select: { id: true; image: true };
+}>;

@@ -53,7 +53,7 @@ export class BillService {
     throw new HttpException(UPDATE_SUCCESS, HttpStatus.OK);
   }
 
-  async removeBill(query: QueryDto) {
+  async removeBills(query: QueryDto) {
     const { ids } = query;
     const listIds = ids.split(',');
     const bills = await this.prisma.bill.findMany({ where: { id: { in: listIds }, isDelete: this.isNotDelete } });
@@ -62,7 +62,7 @@ export class BillService {
     throw new HttpException(REMOVE_SUCCESS, HttpStatus.OK);
   }
 
-  async removeBillPernament(query: QueryDto) {
+  async removeBillsPermenant(query: QueryDto) {
     const { ids } = query;
     const listIds = ids.split(',');
     const bills = await this.prisma.bill.findMany({ where: { id: { in: listIds }, isDelete: this.isNotDelete } });

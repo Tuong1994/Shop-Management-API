@@ -49,15 +49,15 @@ export class BillController {
   @Delete('remove')
   @UseGuards(JwtGuard)
   @HttpCode(HttpStatus.OK)
-  removeBill(@Query() query: QueryDto) {
-    return this.billService.removeBill(query);
+  removeBills(@Query() query: QueryDto) {
+    return this.billService.removeBills(query);
   }
 
   @Delete('removePermanent')
   @UseGuards(JwtGuard)
   @HttpCode(HttpStatus.OK)
-  removePermanent(@Query() query: QueryDto) {
-    return this.billService.removeBillPernament(query);
+  removeBillsPermanent(@Query() query: QueryDto) {
+    return this.billService.removeBillsPermenant(query);
   }
 
   @Post('restore')
