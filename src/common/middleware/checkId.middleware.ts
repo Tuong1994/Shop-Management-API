@@ -13,7 +13,22 @@ export class CheckIdMiddleware implements NestMiddleware {
   }
 
   async use(req: Request, res: Response, next: NextFunction) {
-    const { ids, userId, categoryId, productId, cartId, cartItemId, imageId, cityId, districtId, wardId } = req.query;
+    const {
+      ids,
+      userId,
+      categoryId,
+      productId,
+      cartId,
+      cartItemId,
+      imageId,
+      cityId,
+      districtId,
+      wardId,
+      billId,
+      growthId,
+      loanId,
+      userLoanId,
+    } = req.query;
 
     if (
       !ids &&
@@ -25,7 +40,11 @@ export class CheckIdMiddleware implements NestMiddleware {
       !imageId &&
       !cityId &&
       !districtId &&
-      !wardId
+      !wardId &&
+      !billId &&
+      !growthId &&
+      !loanId &&
+      !userLoanId
     ) {
       throw new HttpException('Id is not provided', HttpStatus.BAD_REQUEST);
     }
@@ -37,7 +56,19 @@ export class CheckIdMiddleware implements NestMiddleware {
     const record = await this.prisma[this.model].findUnique({
       where: {
         [checkedField]: String(
-          userId || categoryId || productId || cartId || cartItemId || imageId || cityId || districtId || wardId,
+          userId ||
+            categoryId ||
+            productId ||
+            cartId ||
+            cartItemId ||
+            imageId ||
+            cityId ||
+            districtId ||
+            wardId ||
+            billId ||
+            growthId ||
+            loanId ||
+            userLoanId,
         ),
         isDelete: { equals: false },
       },

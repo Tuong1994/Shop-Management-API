@@ -21,6 +21,7 @@ import { ProductModule } from './product/product.module';
 import { CartModule } from './cart/cart.module';
 import { BillModule } from './bill/bill.module';
 import { GrowthModule } from './growth/growth.module';
+import { LoanModule } from './loan/loan.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { GrowthModule } from './growth/growth.module';
     CartModule,
     GrowthModule,
     BillModule,
+    LoanModule,
     CityModule,
     DistrictModule,
     WardModule,

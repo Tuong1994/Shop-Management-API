@@ -292,6 +292,7 @@ model UserLoan {
   id        String   @id @default(uuid())
   payment   Int
   lateFee   Int
+  status    Int
   dueDate   DateTime
   isDelete  Boolean?
   createdAt DateTime @default(now())

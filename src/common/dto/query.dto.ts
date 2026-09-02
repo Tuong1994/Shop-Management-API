@@ -15,6 +15,8 @@ export class QueryDto {
   cartItemId?: string;
   billId?: string;
   growthId?: string;
+  loanId?: string;
+  userLoanId?: string;
   imageId?: string;
   cityId?: string;
   districtId?: string;

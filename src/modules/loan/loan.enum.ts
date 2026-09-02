@@ -6,3 +6,8 @@ export enum ELoanType {
   PREMIUM = 5,
   MEGA = 6,
 }
+
+export enum ELoanStatus {
+  PAID = 1,
+  NOT_PAID = 2,
+}
