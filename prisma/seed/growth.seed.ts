@@ -3,7 +3,8 @@ import { Growth } from '@prisma/client';
 const growths: Growth[] = [
   {
     id: 'G_1',
-    name: 'Section 1 (Default)',
+    nameEn: 'Section 1',
+    nameVn: "Khu vực 1",
     cost: 0,
     order: 1,
     isDelete: false,
@@ -12,7 +13,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_2',
-    name: 'Section 2',
+    nameEn: 'Section 2',
+    nameVn: "Khu vực 2",
     cost: 350,
     order: 2,
     isDelete: false,
@@ -21,7 +23,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_3',
-    name: 'Section 3',
+    nameEn: 'Section 3',
+    nameVn: "Khu vực 3",
     cost: 750,
     order: 3,
     isDelete: false,
@@ -30,7 +33,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_4',
-    name: 'Section 4',
+    nameEn: 'Section 4',
+    nameVn: "Khu vực 4",
     cost: 1300,
     order: 4,
     isDelete: false,
@@ -39,7 +43,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_5',
-    name: 'Section 5',
+    nameEn: 'Section 5',
+    nameVn: "Khu vực 5",
     cost: 2600,
     order: 5,
     isDelete: false,
@@ -48,7 +53,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_6',
-    name: 'Section 6',
+    nameEn: 'Section 6',
+    nameVn: "Khu vực 6",
     cost: 4400,
     order: 6,
     isDelete: false,
@@ -57,7 +63,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_7',
-    name: 'Section 7',
+    nameEn: 'Section 7',
+    nameVn: "Khu vực 7",
     cost: 6700,
     order: 7,
     isDelete: false,
@@ -66,7 +73,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_8',
-    name: 'Section 8',
+    nameEn: 'Section 8',
+    nameVn: "Khu vực 8",
     cost: 11000,
     order: 8,
     isDelete: false,
@@ -75,7 +83,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_9',
-    name: 'Section 9',
+    nameEn: 'Section 9',
+    nameVn: "Khu vực 9",
     cost: 16500,
     order: 9,
     isDelete: false,
@@ -84,7 +93,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_10',
-    name: 'Section 10',
+    nameEn: 'Section 10',
+    nameVn: "Khu vực 10",
     cost: 20100,
     order: 10,
     isDelete: false,
@@ -93,7 +103,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_11',
-    name: 'Section 11',
+    nameEn: 'Section 11',
+    nameVn: "Khu vực 11",
     cost: 24600,
     order: 11,
     isDelete: false,
@@ -102,7 +113,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_12',
-    name: 'Section 12',
+    nameEn: 'Section 12',
+    nameVn: "Khu vực 12",
     cost: 31000,
     order: 12,
     isDelete: false,
@@ -111,7 +123,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_13',
-    name: 'Section 13',
+    nameEn: 'Section 13',
+    nameVn: "Khu vực 13",
     cost: 40000,
     order: 13,
     isDelete: false,
@@ -120,7 +133,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_14',
-    name: 'Section 14',
+    nameEn: 'Section 14',
+    nameVn: "Khu vực 14",
     cost: 52000,
     order: 14,
     isDelete: false,
@@ -129,7 +143,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_15',
-    name: 'Section 15',
+    nameEn: 'Section 15',
+    nameVn: "Khu vực 15",
     cost: 64500,
     order: 15,
     isDelete: false,
@@ -138,7 +153,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_16',
-    name: 'Section 16',
+    nameEn: 'Section 16',
+    nameVn: "Khu vực 16",
     cost: 72600,
     order: 16,
     isDelete: false,
@@ -147,7 +163,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_17',
-    name: 'Section 17',
+    nameEn: 'Section 17',
+    nameVn: "Khu vực 17",
     cost: 83500,
     order: 17,
     isDelete: false,
@@ -156,7 +173,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_18',
-    name: 'Section 18',
+    nameEn: 'Section 18',
+    nameVn: "Khu vực 18",
     cost: 90000,
     order: 18,
     isDelete: false,
@@ -165,7 +183,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_19',
-    name: 'Section 19',
+    nameEn: 'Section 19',
+    nameVn: "Khu vực 19",
     cost: 102000,
     order: 19,
     isDelete: false,
@@ -174,7 +193,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_20',
-    name: 'Section 20',
+    nameEn: 'Section 20',
+    nameVn: "Khu vực 20",
     cost: 115000,
     order: 20,
     isDelete: false,
@@ -183,7 +203,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_21',
-    name: 'Section 21',
+    nameEn: 'Section 21',
+    nameVn: "Khu vực 21",
     cost: 132000,
     order: 21,
     isDelete: false,
@@ -192,7 +213,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_22',
-    name: 'Section 22',
+    nameEn: 'Section 22',
+    nameVn: "Khu vực 22",
     cost: 146000,
     order: 22,
     isDelete: false,
@@ -201,7 +223,8 @@ const growths: Growth[] = [
   },
   {
     id: 'G_23',
-    name: 'Section 23',
+    nameEn: 'Section 23',
+    nameVn: "Khu vực 23",
     cost: 160000,
     order: 23,
     isDelete: false,

@@ -2,7 +2,10 @@ import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class GrowthDto {
   @IsNotEmpty()
-  name: string;
+  nameEn: string;
+
+  @IsNotEmpty()
+  nameVn: string;
 
   @IsNotEmpty()
   @IsNumber()

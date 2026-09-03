@@ -3,7 +3,9 @@ import { PrismaService } from '../prisma/prisma.service';
 import { QueryDto } from 'src/common/dto/query.dto';
 import { GrowthDto, UserGrowthDto } from './growth.dto';
 import { GrowthHelper } from './growth.helper';
+import { Growth } from '@prisma/client';
 import responseMessage from 'src/common/message';
+import utils from 'src/utils';
 
 const { NOT_FOUND, CREATE_SUCCESS, UPDATE_SUCCESS, REMOVE_SUCCESS, NO_DATA_RESTORE, RESTORE_SUCCESS } = responseMessage;
 
@@ -26,20 +28,20 @@ export class GrowthService {
   }
 
   async getGrowth(query: QueryDto) {
-    const { growthId } = query;
+    const { growthId, locale } = query;
     const growth = await this.prisma.growth.findUnique({
       where: { id: growthId, isDelete: this.isNotDelete },
       include: { purchases: true },
     });
-    if (!growth) throw new HttpException(NOT_FOUND, HttpStatus.NOT_FOUND);
-    return growth;
+    const convertGrowth = utils.convertRecordsName<Growth>(growth, locale)
+    return convertGrowth;
   }
 
   async createGrowth(growth: GrowthDto) {
-    const { name, cost, order } = growth;
+    const { nameEn, nameVn, cost, order } = growth;
     const isExist = await this.growthHelper.checkOrderUnique(order);
     if (isExist) throw new HttpException('Order number must be unique', HttpStatus.BAD_REQUEST);
-    const newGrowth = await this.prisma.growth.create({ data: { name, cost, order, isDelete: false } });
+    const newGrowth = await this.prisma.growth.create({ data: { nameEn, nameVn, cost, order, isDelete: false } });
     return newGrowth;
   }
 
@@ -58,10 +60,10 @@ export class GrowthService {
 
   async updateGrowth(query: QueryDto, growth: GrowthDto) {
     const { growthId } = query;
-    const { name, cost, order } = growth;
+    const { nameEn, nameVn, cost, order } = growth;
     const isExist = await this.growthHelper.checkOrderUnique(order);
     if (isExist) throw new HttpException('Order number must be unique', HttpStatus.BAD_REQUEST);
-    await this.prisma.growth.update({ where: { id: growthId }, data: { name, cost, order } });
+    await this.prisma.growth.update({ where: { id: growthId }, data: { nameEn, nameVn, cost, order } });
     throw new HttpException(UPDATE_SUCCESS, HttpStatus.OK);
   }
 

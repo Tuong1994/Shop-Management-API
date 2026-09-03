@@ -4,9 +4,14 @@ export enum EGender {
 }
 
 export enum ERole {
-  MANAGER = 1,
-  LEADER = 2,
-  STAFF = 3,
+  OWNER = 1,
+  MANAGER = 2,
+  LEADER = 3,
+  CASHIER = 4,
+  STOCKER = 5,
+  CUSTOMER_SERVICE = 6,
+  JANITOR = 7,
+  SECURITY = 8,
 }
 
 export enum EPermission {

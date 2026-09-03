@@ -214,7 +214,8 @@ CREATE TABLE `cart_item` (
 -- CreateTable
 CREATE TABLE `growth` (
     `id` VARCHAR(191) NOT NULL,
-    `name` VARCHAR(191) NOT NULL,
+    `nameEn` VARCHAR(191) NOT NULL,
+    `nameVn` VARCHAR(191) NOT NULL,
     `cost` INTEGER NOT NULL,
     `order` INTEGER NOT NULL,
     `isDelete` BOOLEAN NULL,
@@ -276,6 +277,7 @@ CREATE TABLE `user_loan` (
     `id` VARCHAR(191) NOT NULL,
     `payment` INTEGER NOT NULL,
     `lateFee` INTEGER NOT NULL,
+    `status` INTEGER NOT NULL,
     `dueDate` DATETIME(3) NOT NULL,
     `isDelete` BOOLEAN NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -319,10 +321,10 @@ ALTER TABLE `cart_item` ADD CONSTRAINT `cart_item_cartId_fkey` FOREIGN KEY (`car
 ALTER TABLE `cart_item` ADD CONSTRAINT `cart_item_productId_fkey` FOREIGN KEY (`productId`) REFERENCES `product`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `user_growth` ADD CONSTRAINT `user_growth_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `user_growth` ADD CONSTRAINT `user_growth_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `user_growth` ADD CONSTRAINT `user_growth_growthId_fkey` FOREIGN KEY (`growthId`) REFERENCES `growth`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `user_growth` ADD CONSTRAINT `user_growth_growthId_fkey` FOREIGN KEY (`growthId`) REFERENCES `growth`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `bill` ADD CONSTRAINT `bill_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
